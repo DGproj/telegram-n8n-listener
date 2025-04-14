@@ -4,23 +4,23 @@ from telethon import TelegramClient, events
 import requests
 import asyncio
 
-# 🛠️ Загружаем переменные из .env
+#Загружаем переменные из .env
 load_dotenv()
 
-# 🔐 ДАННЫЕ ДЛЯ АВТОРИЗАЦИИ
+#ДАННЫЕ ДЛЯ АВТОРИЗАЦИИ
 api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
 
-# 🔗 URL Webhook в n8n
+#URL Webhook в n8n
 webhook_url = os.getenv("WEBHOOK_URL")
 
-# 📢 Список каналов, которые нужно слушать (можно расширить)
+# Список каналов, которые нужно слушать (можно расширить)
 channels_usernames = (
     'название канала1 без @',
     'название канала2 без @'
 )
 
-# 📌 ИНИЦИАЛИЗАЦИЯ КЛИЕНТА (Эмулируем обычное устройство)
+#ИНИЦИАЛИЗАЦИЯ КЛИЕНТА (Эмулируем обычное устройство)
 client = TelegramClient(
     'anon', api_id, api_hash,
     system_version='4.16.30-vxCUSTOM',
@@ -28,7 +28,7 @@ client = TelegramClient(
     app_version='4.2'
 )
 
-# 🔔 ОБРАБОТКА НОВЫХ СООБЩЕНИЙ
+#ОБРАБОТКА НОВЫХ СООБЩЕНИЙ
 @client.on(events.NewMessage(chats=channels_usernames))
 async def handler(event):
     msg = event.message.message  # Текст сообщения
@@ -57,7 +57,7 @@ async def handler(event):
     except Exception as e:
         print(f"❌ Ошибка при отправке в n8n: {e}")
 
-# 📡 Запуск клиента
+#Запуск клиента
 async def main():
     print("⏳ Запуск клиента...")
     await client.start()
